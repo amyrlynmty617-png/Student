@@ -3,62 +3,54 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Student AI</title>
 
 <style>
 body{
+    font-family:tahoma;
+    background:#f1f5f9;
     margin:0;
-    font-family:tahoma, Arial;
-    background:#f2f4f8;
-    color:#222;
 }
 
-.container{
-    max-width:450px;
-    margin:40px auto;
+.box{
+    max-width:500px;
     background:white;
+    margin:30px auto;
     padding:25px;
     border-radius:15px;
-    box-shadow:0 5px 20px #ddd;
+    box-shadow:0 5px 20px #ccc;
 }
 
-h1{
-    text-align:center;
-}
-
-input, textarea, button{
+input,textarea,button{
     width:100%;
-    box-sizing:border-box;
-    margin-top:10px;
     padding:12px;
+    margin:7px 0;
     border-radius:8px;
     border:1px solid #ccc;
-    font-size:15px;
+    box-sizing:border-box;
 }
 
 button{
     background:#2563eb;
     color:white;
-    border:none;
+    border:0;
     cursor:pointer;
 }
 
-button:hover{
-    opacity:.9;
+.hidden{
+    display:none;
 }
 
-hr{
-    margin:25px 0;
-}
-
-#result{
-    margin-top:20px;
-    padding:15px;
+.card{
     background:#f8fafc;
+    padding:15px;
     border-radius:10px;
+    margin-top:10px;
     white-space:pre-wrap;
-    text-align:right;
+}
+
+h2{
+    text-align:center;
 }
 </style>
 
@@ -66,9 +58,10 @@ hr{
 
 <body>
 
-<div class="container">
 
-<h1>🎓 Student AI</h1>
+<div class="box" id="loginBox">
+
+<h2>ورود به Student AI</h2>
 
 <input id="username" placeholder="نام کاربری">
 
@@ -76,101 +69,218 @@ hr{
 
 <button onclick="login()">ورود</button>
 
+<div id="loginMsg"></div>
 
-<hr>
-
-
-<textarea id="question" rows="5" placeholder="سؤال خود را بنویسید"></textarea>
-
-<button onclick="solve()">حل سؤال با هوش مصنوعی</button>
+</div>
 
 
-<div id="result">
-نتیجه اینجا نمایش داده می‌شود
+
+<div class="box hidden" id="panel">
+
+<h2>پنل دانش‌آموز</h2>
+
+<p id="userInfo"></p>
+
+
+<textarea id="question" rows="5"
+placeholder="سؤال خود را بنویسید"></textarea>
+
+
+<button onclick="askAI()">
+ارسال به هوش مصنوعی
+</button>
+
+
+<div class="card" id="answer">
+پاسخ اینجا نمایش داده می‌شود
 </div>
 
 
+<h3>تاریخچه سوالات</h3>
+
+<div id="history"></div>
+
+
+<button onclick="logout()">
+خروج
+</button>
+
+
 </div>
+
 
 
 <script>
 
-let token = "";
+let token="";
 
 
 async function login(){
 
-    const res = await fetch("/api/auth/login",{
-        method:"POST",
-        headers:{
-            "Content-Type":"application/json"
-        },
-        body:JSON.stringify({
-            username:username.value,
-            password:password.value
-        })
-    });
+let res=await fetch("/api/auth/login",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+username:username.value,
+
+password:password.value
+
+})
+
+});
 
 
-    const data = await res.json();
+let data=await res.json();
 
 
-    if(data.token){
+if(data.token){
 
-        token=data.token;
+token=data.token;
 
-        result.innerText="✅ ورود موفق شد";
+localStorage.token=token;
 
-    }else{
+loadUser();
 
-        result.innerText=data.error || "خطا در ورود";
+}else{
 
-    }
+loginMsg.innerText=data.error || "خطا";
+
+}
 
 }
 
 
 
-async function solve(){
+async function loadUser(){
 
-    if(!token){
+let res=await fetch("/api/me",{
 
-        result.innerText="اول وارد حساب شوید";
+headers:{
 
-        return;
+Authorization:"Bearer "+token
 
-    }
+}
 
-
-    result.innerText="در حال پردازش...";
-
-
-    const res = await fetch("/api/solve",{
-
-        method:"POST",
-
-        headers:{
-            "Content-Type":"application/json",
-            "Authorization":"Bearer "+token
-        },
-
-        body:JSON.stringify({
-
-            question:question.value,
-
-            subject:"عمومی",
-
-            level:"کامل و آموزشی"
-
-        })
-
-    });
+});
 
 
-    const data = await res.json();
+let data=await res.json();
 
 
-    result.innerText=data.answer || data.error || "پاسخی دریافت نشد";
+if(data.user){
+
+loginBox.classList.add("hidden");
+
+panel.classList.remove("hidden");
+
+
+userInfo.innerText=
+"سلام "+data.user.name+
+" | پایه: "+data.user.grade;
+
+
+history.innerHTML="";
+
+
+data.user.history.forEach(item=>{
+
+history.innerHTML+=`
+
+<div class="card">
+
+درس: ${item.subject}
+
+<br>
+
+سؤال:
+${item.question}
+
+<br><br>
+
+پاسخ:
+${item.answer}
+
+</div>
+
+`;
+
+});
+
+
+}
+
+}
+
+
+
+async function askAI(){
+
+answer.innerText="در حال پردازش...";
+
+
+let res=await fetch("/api/solve",{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json",
+
+Authorization:"Bearer "+token
+
+},
+
+body:JSON.stringify({
+
+question:question.value,
+
+subject:"عمومی",
+
+level:"کامل و آموزشی"
+
+})
+
+});
+
+
+let data=await res.json();
+
+
+answer.innerText=
+data.answer || data.error;
+
+loadUser();
+
+}
+
+
+
+function logout(){
+
+localStorage.removeItem("token");
+
+location.reload();
+
+}
+
+
+window.onload=()=>{
+
+let t=localStorage.token;
+
+if(t){
+
+token=t;
+
+loadUser();
+
+}
 
 }
 
