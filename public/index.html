@@ -1,1 +1,181 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Student AI</title>
+
+<style>
+body{
+    margin:0;
+    font-family:tahoma, Arial;
+    background:#f2f4f8;
+    color:#222;
+}
+
+.container{
+    max-width:450px;
+    margin:40px auto;
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 5px 20px #ddd;
+}
+
+h1{
+    text-align:center;
+}
+
+input, textarea, button{
+    width:100%;
+    box-sizing:border-box;
+    margin-top:10px;
+    padding:12px;
+    border-radius:8px;
+    border:1px solid #ccc;
+    font-size:15px;
+}
+
+button{
+    background:#2563eb;
+    color:white;
+    border:none;
+    cursor:pointer;
+}
+
+button:hover{
+    opacity:.9;
+}
+
+hr{
+    margin:25px 0;
+}
+
+#result{
+    margin-top:20px;
+    padding:15px;
+    background:#f8fafc;
+    border-radius:10px;
+    white-space:pre-wrap;
+    text-align:right;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🎓 Student AI</h1>
+
+<input id="username" placeholder="نام کاربری">
+
+<input id="password" type="password" placeholder="رمز عبور">
+
+<button onclick="login()">ورود</button>
+
+
+<hr>
+
+
+<textarea id="question" rows="5" placeholder="سؤال خود را بنویسید"></textarea>
+
+<button onclick="solve()">حل سؤال با هوش مصنوعی</button>
+
+
+<div id="result">
+نتیجه اینجا نمایش داده می‌شود
+</div>
+
+
+</div>
+
+
+<script>
+
+let token = "";
+
+
+async function login(){
+
+    const res = await fetch("/api/auth/login",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+            username:username.value,
+            password:password.value
+        })
+    });
+
+
+    const data = await res.json();
+
+
+    if(data.token){
+
+        token=data.token;
+
+        result.innerText="✅ ورود موفق شد";
+
+    }else{
+
+        result.innerText=data.error || "خطا در ورود";
+
+    }
+
+}
+
+
+
+async function solve(){
+
+    if(!token){
+
+        result.innerText="اول وارد حساب شوید";
+
+        return;
+
+    }
+
+
+    result.innerText="در حال پردازش...";
+
+
+    const res = await fetch("/api/solve",{
+
+        method:"POST",
+
+        headers:{
+            "Content-Type":"application/json",
+            "Authorization":"Bearer "+token
+        },
+
+        body:JSON.stringify({
+
+            question:question.value,
+
+            subject:"عمومی",
+
+            level:"کامل و آموزشی"
+
+        })
+
+    });
+
+
+    const data = await res.json();
+
+
+    result.innerText=data.answer || data.error || "پاسخی دریافت نشد";
+
+}
+
+</script>
+
+
+</body>
+  </html>
