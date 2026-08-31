@@ -150,7 +150,7 @@ app.delete("/api/admin/analyses/:id",auth,admin,(req,res)=>{
  res.json({ok:true});
 });
 
-app.get("*",(req,res)=>res.sendFile(path.join(__dirname,"public","index.html")));
+join(app.use((req,res)=>res.sendFile(path.join(__dirname,"index.html")));
 if(process.env.ADMIN_USERNAME && process.env.ADMIN_PASSWORD){
  const exists=db.prepare("SELECT id FROM users WHERE username=?").get(process.env.ADMIN_USERNAME);
  if(!exists){
