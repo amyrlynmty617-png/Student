@@ -1,56 +1,55 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Student AI</title>
 
 <style>
 body{
-    font-family:tahoma;
-    background:#f1f5f9;
-    margin:0;
+font-family:tahoma;
+background:#f1f5f9;
+margin:0;
 }
 
 .box{
-    max-width:500px;
-    background:white;
-    margin:30px auto;
-    padding:25px;
-    border-radius:15px;
-    box-shadow:0 5px 20px #ccc;
+max-width:420px;
+background:white;
+margin:40px auto;
+padding:25px;
+border-radius:15px;
+box-shadow:0 5px 20px #ccc;
 }
 
-input,textarea,button{
-    width:100%;
-    padding:12px;
-    margin:7px 0;
-    border-radius:8px;
-    border:1px solid #ccc;
-    box-sizing:border-box;
+input,button{
+width:100%;
+padding:12px;
+margin:7px 0;
+border-radius:8px;
+border:1px solid #ccc;
+box-sizing:border-box;
 }
 
 button{
-    background:#2563eb;
-    color:white;
-    border:0;
-    cursor:pointer;
-}
-
-.hidden{
-    display:none;
-}
-
-.card{
-    background:#f8fafc;
-    padding:15px;
-    border-radius:10px;
-    margin-top:10px;
-    white-space:pre-wrap;
+background:#2563eb;
+color:white;
+border:0;
 }
 
 h2{
-    text-align:center;
+text-align:center;
+}
+
+.hidden{
+display:none;
+}
+
+.msg{
+margin-top:10px;
+text-align:center;
 }
 </style>
 
@@ -59,17 +58,55 @@ h2{
 <body>
 
 
-<div class="box" id="loginBox">
+<div class="box" id="authBox">
 
-<h2>ورود به Student AI</h2>
+<h2>🎓 Student AI</h2>
 
-<input id="username" placeholder="نام کاربری">
 
-<input id="password" type="password" placeholder="رمز عبور">
+<div id="login">
 
-<button onclick="login()">ورود</button>
+<h3>ورود</h3>
 
-<div id="loginMsg"></div>
+<input id="loginUser" placeholder="نام کاربری">
+
+<input id="loginPass" type="password" placeholder="رمز عبور">
+
+<button onclick="login()">
+ورود
+</button>
+
+</div>
+
+
+
+<hr>
+
+
+<div id="register">
+
+<h3>ثبت نام</h3>
+
+
+<input id="regName" placeholder="نام و نام خانوادگی">
+
+<input id="regUser" placeholder="نام کاربری">
+
+<input id="regPass" type="password" placeholder="رمز عبور">
+
+<input id="regGrade" placeholder="پایه تحصیلی">
+
+<input id="regMajor" placeholder="رشته">
+
+
+<button onclick="register()">
+ثبت نام
+</button>
+
+
+</div>
+
+
+<div class="msg" id="msg"></div>
 
 </div>
 
@@ -77,34 +114,13 @@ h2{
 
 <div class="box hidden" id="panel">
 
-<h2>پنل دانش‌آموز</h2>
+<h2>ورود موفق</h2>
 
-<p id="userInfo"></p>
-
-
-<textarea id="question" rows="5"
-placeholder="سؤال خود را بنویسید"></textarea>
-
-
-<button onclick="askAI()">
-ارسال به هوش مصنوعی
-</button>
-
-
-<div class="card" id="answer">
-پاسخ اینجا نمایش داده می‌شود
-</div>
-
-
-<h3>تاریخچه سوالات</h3>
-
-<div id="history"></div>
-
+<p id="welcome"></p>
 
 <button onclick="logout()">
 خروج
 </button>
-
 
 </div>
 
@@ -112,12 +128,15 @@ placeholder="سؤال خود را بنویسید"></textarea>
 
 <script>
 
+
 let token="";
 
 
-async function login(){
 
-let res=await fetch("/api/auth/login",{
+async function register(){
+
+
+let res=await fetch("/api/auth/register",{
 
 method:"POST",
 
@@ -127,9 +146,15 @@ headers:{
 
 body:JSON.stringify({
 
-username:username.value,
+name:regName.value,
 
-password:password.value
+username:regUser.value,
+
+password:regPass.value,
+
+grade:regGrade.value,
+
+major:regMajor.value
 
 })
 
@@ -141,30 +166,88 @@ let data=await res.json();
 
 if(data.token){
 
+msg.innerText="ثبت نام موفق شد";
+
 token=data.token;
 
 localStorage.token=token;
 
-loadUser();
+showPanel();
 
 }else{
 
-loginMsg.innerText=data.error || "خطا";
+msg.innerText=data.error || "خطا";
 
 }
 
+
 }
 
 
 
-async function loadUser(){
+
+
+async function login(){
+
+
+let res=await fetch("/api/auth/login",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+username:loginUser.value,
+
+password:loginPass.value
+
+})
+
+});
+
+
+let data=await res.json();
+
+
+
+if(data.token){
+
+token=data.token;
+
+localStorage.token=token;
+
+msg.innerText="ورود موفق شد";
+
+showPanel();
+
+
+}else{
+
+msg.innerText=data.error || "خطا";
+
+}
+
+
+}
+
+
+
+
+async function showPanel(){
+
+
+authBox.classList.add("hidden");
+
+panel.classList.remove("hidden");
+
 
 let res=await fetch("/api/me",{
 
 headers:{
-
 Authorization:"Bearer "+token
-
 }
 
 });
@@ -175,87 +258,11 @@ let data=await res.json();
 
 if(data.user){
 
-loginBox.classList.add("hidden");
-
-panel.classList.remove("hidden");
-
-
-userInfo.innerText=
-"سلام "+data.user.name+
-" | پایه: "+data.user.grade;
-
-
-history.innerHTML="";
-
-
-data.user.history.forEach(item=>{
-
-history.innerHTML+=`
-
-<div class="card">
-
-درس: ${item.subject}
-
-<br>
-
-سؤال:
-${item.question}
-
-<br><br>
-
-پاسخ:
-${item.answer}
-
-</div>
-
-`;
-
-});
-
+welcome.innerText=
+"سلام "+data.user.name;
 
 }
 
-}
-
-
-
-async function askAI(){
-
-answer.innerText="در حال پردازش...";
-
-
-let res=await fetch("/api/solve",{
-
-method:"POST",
-
-headers:{
-
-"Content-Type":"application/json",
-
-Authorization:"Bearer "+token
-
-},
-
-body:JSON.stringify({
-
-question:question.value,
-
-subject:"عمومی",
-
-level:"کامل و آموزشی"
-
-})
-
-});
-
-
-let data=await res.json();
-
-
-answer.innerText=
-data.answer || data.error;
-
-loadUser();
 
 }
 
@@ -270,6 +277,8 @@ location.reload();
 }
 
 
+
+
 window.onload=()=>{
 
 let t=localStorage.token;
@@ -278,11 +287,13 @@ if(t){
 
 token=t;
 
-loadUser();
+showPanel();
 
 }
 
 }
+
+
 
 </script>
 
