@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>سامانه دانش‌آموزی</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Tahoma,Arial,sans-serif;background:#f5f7fb;color:#182033}
+button,input,select,textarea{font:inherit}button{cursor:pointer;border:0}.hidden{display:none!important}
+.auth{min-height:100vh;display:grid;place-items:center;padding:18px;background:linear-gradient(135deg,#eef0ff,#fafaff)}
+.box{background:#fff;border:1px solid #e7e9f1;border-radius:26px;box-shadow:0 15px 45px #28304a12}.auth .box{width:min(440px,100%);padding:26px}
+.logo,.brand i{background:linear-gradient(135deg,#5b5cf0,#7b4cff);color:#fff}.logo{width:62px;height:62px;border-radius:20px;display:grid;place-items:center;font-size:28px;font-weight:bold}
+h1{font-size:25px;margin:16px 0 8px}.muted{color:#728096;font-size:13px;line-height:1.8}
+.tabs{display:flex;gap:5px;background:#f1f3f8;padding:4px;border-radius:14px;margin:20px 0}.tab{flex:1;padding:11px;border-radius:11px;background:transparent;color:#728096}.tab.active{background:#fff;color:#5b5cf0;font-weight:bold}
+.field{margin:14px 0}.field label{display:block;font-size:13px;font-weight:bold;margin-bottom:7px}
+input,select,textarea{width:100%;border:1px solid #e5e8f0;background:#fbfcff;border-radius:13px;padding:13px;outline:0}textarea{min-height:180px;resize:vertical}
+.btn{width:100%;padding:14px;border-radius:14px;font-weight:bold}.primary{background:linear-gradient(135deg,#5b5cf0,#7b4cff);color:#fff}.light{background:#eef1f7;color:#182033}
+header{position:sticky;top:0;z-index:10;background:#ffffffed;backdrop-filter:blur(12px);border-bottom:1px solid #e8eaf2}.head{max-width:1100px;margin:auto;padding:12px 18px;display:flex;justify-content:space-between;align-items:center}
+.brand{display:flex;align-items:center;gap:10px;font-weight:bold}.brand i{font-style:normal;width:42px;height:42px;border-radius:13px;display:grid;place-items:center}
+.menu{position:relative}.dots{width:44px;height:44px;border-radius:13px;background:#f0f2f7;font-size:23px}.drop{position:absolute;left:0;top:52px;width:220px;padding:7px;background:#fff;border:1px solid #e5e8f0;border-radius:16px;box-shadow:0 15px 40px #28304a18}.drop button{width:100%;padding:12px;text-align:right;border-radius:10px;background:transparent}.drop button:hover{background:#f2f3ff}
+main,.page{max-width:1100px;margin:auto;padding:22px 18px 50px}.hero{background:linear-gradient(135deg,#5b5cf0,#7b4cff);color:#fff;border-radius:25px;padding:25px;display:flex;justify-content:space-between;align-items:center}.hero h2{margin:8px 0}.avatar{width:70px;height:70px;border-radius:23px;background:#ffffff22;display:grid;place-items:center;font-size:28px;font-weight:bold}
+.title{font-size:19px;margin:25px 0 13px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.card{background:#fff;border:1px solid #e6e9f1;border-radius:20px;padding:18px;box-shadow:0 6px 25px #2221}.action{min-height:120px;display:flex;align-items:center;gap:14px;cursor:pointer}.ico{width:54px;height:54px;border-radius:17px;background:#eef0ff;display:grid;place-items:center;font-size:25px;flex:none}.stat b{display:block;font-size:25px;margin:8px 0}
+.page{max-width:900px}.back{background:#eef1f7;padding:10px 14px;border-radius:12px;margin-bottom:15px}.result{background:#f7f8ff;border:1px solid #e1e4ff;border-radius:17px;padding:17px;line-height:2}.good{background:#effbf3;border-color:#c9edd5}.row{padding:15px 0;border-bottom:1px solid #e8eaf2;display:flex;gap:15px;align-items:center}.bigav{width:60px;height:60px;border-radius:19px;background:linear-gradient(135deg,#5b5cf0,#7b4cff);color:#fff;display:grid;place-items:center;font-weight:bold;font-size:24px}.empty{text-align:center;padding:30px;color:#728096}
+.loading{opacity:.65;pointer-events:none}.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);opacity:0;background:#182033;color:#fff;padding:12px 18px;border-radius:13px;transition:.25s;z-index:50}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.hero{padding:20px}.hero h2{font-size:20px}.avatar{width:58px;height:58px}.head,main,.page{padding-left:14px;padding-right:14px}}
+
+.adminstats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:15px 0}.adminstat{background:#fff;border:1px solid #e6e9f1;border-radius:18px;padding:16px}.adminstat b{font-size:24px;display:block;margin-top:7px}
+.adminbar{display:flex;gap:8px;margin:15px 0}.adminbar input{flex:1}.smallbtn{padding:9px 11px;border-radius:10px;background:#eef1f7}.danger{background:#fff0f0;color:#d92d20}.warn{background:#fff7df;color:#9a6700}.success{background:#edfff3;color:#16803c}
+@media(max-width:700px){.adminstats{grid-template-columns:repeat(2,1fr)}.adminbar{flex-direction:column}}
+</style>
+</head>
+<body>
+<section id="auth" class="auth"><div class="box">
+<div class="logo">✓</div><h1>سامانه دانش‌آموزی</h1><p class="muted">حساب خودت را بساز و وارد پنل اختصاصی‌ات شو.</p>
+<div class="tabs"><button id="lt" class="tab active" onclick="authTab('login')">ورود</button><button id="rt" class="tab" onclick="authTab('register')">ساخت حساب</button></div>
+<div id="login"><div class="field"><label>نام کاربری</label><input id="lu"></div><div class="field"><label>رمز عبور</label><input id="lp" type="password"></div><button class="btn primary" onclick="login()">ورود به پنل</button></div>
+<div id="register" class="hidden"><div class="field"><label>نام و نام خانوادگی</label><input id="rn"></div><div class="field"><label>نام کاربری</label><input id="ru"></div><div class="field"><label>رمز عبور</label><input id="rp" type="password"></div>
+<div class="field"><label>پایه تحصیلی</label><select id="rg"><option value="">انتخاب پایه</option><option>هفتم</option><option>هشتم</option><option>نهم</option><option>دهم</option><option>یازدهم</option><option>دوازدهم</option></select></div>
+<div class="field"><label>رشته</label><input id="rmajor"></div><button class="btn primary" onclick="registerUser()">ساخت حساب</button></div>
+</div></section>
+
+<section id="dashboard" class="hidden"><header><div class="head"><div class="brand"><i>✓</i><span>پنل دانش‌آموزی</span></div><div class="menu"><button class="dots" onclick="toggleMenu()">⋮</button><div id="drop" class="drop hidden">
+<button onclick="page('profile')">👤 پروفایل</button><button onclick="page('status')">📊 وضعیت تحصیلی</button><button onclick="page('history')">🕘 تاریخچه تحلیل‌ها</button><button onclick="page('settings')">⚙️ تنظیمات</button><button onclick="page('admin')">🛠 پنل مدیریت</button><button onclick="logout()">🚪 خروج</button>
+</div></div></div></header>
+<main><div class="hero"><div><small>خوش آمدی 👋</small><h2 id="wn">دانش‌آموز</h2><p id="wi"></p></div><div id="av" class="avatar">د</div></div>
+<h2 class="title">دسترسی سریع</h2><div class="grid">
+<div class="card action" onclick="page('solver')"><div class="ico">🧠</div><div><h3>تحلیل و حل سؤال</h3><p class="muted">سؤال متنی یا تصویری را برای هوش مصنوعی بفرست.</p></div></div>
+<div class="card action" onclick="page('history')"><div class="ico">🕘</div><div><h3>تاریخچه</h3><p class="muted">تحلیل‌های قبلی خودت را ببین.</p></div></div>
+<div class="card action" onclick="page('status')"><div class="ico">📈</div><div><h3>وضعیت تحصیلی</h3><p class="muted">آمار و اطلاعات حساب.</p></div></div></div>
+<h2 class="title">خلاصه پنل</h2><div class="grid">
+<div class="card stat"><span class="muted">تعداد تحلیل‌ها</span><b id="count">0</b></div><div class="card stat"><span class="muted">پایه</span><b id="grade">—</b></div><div class="card stat"><span class="muted">وضعیت</span><b style="font-size:20px;color:#16a34a">فعال</b></div>
+</div></main></section>
+
+<section id="internal" class="hidden"><header><div class="head"><div class="brand"><i>✓</i><span id="pt">صفحه</span></div><button class="dots" onclick="dashboard()">⌂</button></div></header><div id="content" class="page"></div></section>
+<div id="toast" class="toast"></div>
+
+<script>
+const DB="student_panel_ai_v1";let users=JSON.parse(localStorage.getItem(DB)||"{}"),current=localStorage.getItem("student_current")||"";
+const $=id=>document.getElementById(id);function save(){localStorage.setItem(DB,JSON.stringify(users))}
+function msg(x){let t=$("toast");t.textContent=x;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2200)}
+function authTab(x){$("login").classList.toggle("hidden",x!=="login");$("register").classList.toggle("hidden",x!=="register");$("lt").classList.toggle("active",x==="login");$("rt").classList.toggle("active",x==="register")}
+async function registerUser(){
+ let name=$("rn").value.trim(),u=$("ru").value.trim(),p=$("rp").value,g=$("rg").value,m=$("rmajor").value.trim();
+ if(!name||!u||!p||!g)return msg("اطلاعات ضروری را کامل کن");
+ if(p.length<4)return msg("رمز حداقل ۴ کاراکتر باشد");
+ try{
+  const r=await fetch("/api/auth/register",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name,username:u,password:p,grade:g,major:m})});
+  const d=await r.json(); if(!r.ok)throw Error(d.error);
+  current=d.token; localStorage.setItem("student_token",current); await dashboard();
+ }catch(e){msg(e.message||"خطا در ثبت‌نام")}
+}
+async function login(){
+ let u=$("lu").value.trim(),p=$("lp").value;
+ try{
+  const r=await fetch("/api/auth/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({username:u,password:p})});
+  const d=await r.json(); if(!r.ok)throw Error(d.error);
+  current=d.token; localStorage.setItem("student_token",current); await dashboard();
+ }catch(e){msg(e.message||"خطا در ورود")}
+}
+function logout(){current="";localStorage.removeItem("student_token");show("auth");msg("از حساب خارج شدی")}
+function show(x){$("auth").classList.toggle("hidden",x!=="auth");$("dashboard").classList.toggle("hidden",x!=="dashboard");$("internal").classList.toggle("hidden",x!=="internal")}
+async function dashboard(){
+ try{
+  let r=await fetch("/api/me",{headers:{"Authorization":"Bearer "+current}});
+  let d=await r.json(); if(!r.ok)throw Error(d.error);
+  users[current]=d.user; show("dashboard"); let u=d.user;
+  $("wn").textContent=u.name; $("wi").textContent=u.grade+(u.major?" • "+u.major:"");
+  $("av").textContent=(u.name||"د")[0]; $("count").textContent=u.history.length; $("grade").textContent=u.grade;
+ }catch(e){localStorage.removeItem("student_token");current="";show("auth")}
+}
+function toggleMenu(){$("drop").classList.toggle("hidden")}
+function page(type){$("drop").classList.add("hidden");show("internal");let titles={solver:"تحلیل و حل سؤال",profile:"پروفایل من",status:"وضعیت تحصیلی",history:"تاریخچه تحلیل‌ها",settings:"تنظیمات"};$("pt").textContent=titles[type]||"صفحه";if(type==="solver")$("content").innerHTML=solver();if(type==="profile")$("content").innerHTML=profile();if(type==="status")$("content").innerHTML=status();if(type==="history")$("content").innerHTML=history();if(type==="settings")$("content").innerHTML=settings();if(type==="admin")admin()}
+function solver(){return `<button class="back" onclick="dashboard()">← بازگشت</button><div class="box" style="padding:20px"><h2>🧠 تحلیل و حل سؤال</h2><p class="muted">سؤال را بنویس یا عکس آن را انتخاب کن.</p><div class="field"><label>درس</label><select id="subject"><option>ریاضی</option><option>فیزیک</option><option>شیمی</option><option>زیست</option><option>ادبیات</option><option>زبان</option><option>دینی</option><option>سایر</option></select></div><div class="field"><label>سؤال</label><textarea id="question" placeholder="سؤال را اینجا بنویس..."></textarea></div><div class="field"><label>عکس سؤال (اختیاری)</label><input id="image" type="file" accept="image/*"></div><div class="field"><label>نوع توضیح</label><select id="level"><option>ساده و آموزشی</option><option>متوسط</option><option>کامل و مرحله‌به‌مرحله</option></select></div><button id="solveBtn" class="btn primary" onclick="solveAI()">🤖 تحلیل با هوش مصنوعی</button></div>`}
+async function solveAI(){
+ let q=$("question").value.trim(),img=$("image").files[0],btn=$("solveBtn");
+ if(!q&&!img)return msg("متن سؤال یا عکس سؤال را وارد کن");
+ btn.classList.add("loading");btn.textContent="در حال تحلیل...";
+ try{
+  let body={question:q,subject:$("subject").value,level:$("level").value};
+  if(img){if(img.size>6*1024*1024)throw Error("حجم عکس باید کمتر از ۶ مگابایت باشد");body.image=await fileData(img)}
+  let r=await fetch("/api/solve",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+current},body:JSON.stringify(body)});
+  let d=await r.json();if(!r.ok)throw Error(d.error);
+  let item={id:d.id,subject:body.subject,level:body.level,question:q||"سؤال تصویری",answer:d.answer,date:d.date};
+  showResult(item);
+ }catch(e){msg(e.message||"خطا")}finally{btn.classList.remove("loading");btn.textContent="🤖 تحلیل با هوش مصنوعی"}
+}
+function fileData(f){return new Promise((res,rej)=>{let r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(f)})}
+function showResult(x){$("pt").textContent="نتیجه تحلیل";$("content").innerHTML=`<button class="back" onclick="page('solver')">← سؤال جدید</button><div class="box" style="padding:20px"><h2>نتیجه تحلیل</h2><div class="result"><b>درس:</b> ${esc(x.subject)}<br><b>سطح:</b> ${esc(x.level)}</div><h3>سؤال</h3><div class="result">${esc(x.question)}</div><h3>پاسخ هوش مصنوعی</h3><div class="result good" style="white-space:pre-wrap">${esc(x.answer)}</div></div>`}
+function profile(){let u=users[current];return `<button class="back" onclick="dashboard()">← بازگشت</button><div class="box" style="padding:20px"><div class="row"><div class="bigav">${esc(u.name[0])}</div><div><h2>${esc(u.name)}</h2><span class="muted">@${esc(current)}</span></div></div><div class="row"><div><b>پایه</b><br><span class="muted">${esc(u.grade)}</span></div></div><div class="row"><div><b>رشته</b><br><span class="muted">${esc(u.major||"ثبت نشده")}</span></div></div></div>`}
+function status(){let u=users[current];return `<button class="back" onclick="dashboard()">← بازگشت</button><div class="grid"><div class="card stat"><span class="muted">تحلیل‌ها</span><b>${u.history.length}</b></div><div class="card stat"><span class="muted">پایه</span><b>${esc(u.grade)}</b></div><div class="card stat"><span class="muted">وضعیت</span><b style="font-size:20px;color:#16a34a">فعال</b></div></div>`}
+function history(){let h=users[current].history;return `<button class="back" onclick="dashboard()">← بازگشت</button><div class="box" style="padding:20px"><h2>🕘 تاریخچه</h2>${h.length?h.map((x,i)=>`<div class="card" style="margin:12px 0"><b>${i+1}. ${esc(x.subject)}</b><p class="muted">${esc(x.date)}</p><p>${esc(x.question)}</p><button class="btn light" onclick='showResult(${JSON.stringify(x).replace(/'/g,"&#39;")})'>مشاهده نتیجه</button></div>`).join(""):`<div class="empty">هنوز تحلیلی ثبت نشده.</div>`}</div>`}
+function settings(){let u=users[current];return `<button class="back" onclick="dashboard()">← بازگشت</button><div class="box" style="padding:20px"><h2>⚙️ تنظیمات</h2><div class="field"><label>نام</label><input id="sn" value="${esc(u.name)}"></div><div class="field"><label>رشته</label><input id="sm" value="${esc(u.major||"")}"></div><button class="btn primary" onclick="saveSettings()">ذخیره</button></div>`}
+function saveSettings(){users[current].name=$("sn").value.trim()||users[current].name;users[current].major=$("sm").value.trim();save();dashboard();msg("ذخیره شد")}
+function admin(){
+ $("pt").textContent="پنل مدیریت";
+ $("content").innerHTML=`<button class="back" onclick="dashboard()">← بازگشت</button>
+ <div class="adminstats" id="adminStats"></div>
+ <div class="box" style="padding:20px">
+ <h2>🛠 مدیریت سیستم</h2>
+ <div class="tabs"><button class="tab active" id="atUsers" onclick="adminTab('users')">👥 کاربران</button><button class="tab" id="atAnalyses" onclick="adminTab('analyses')">🧠 تحلیل‌ها</button></div>
+ <div id="adminPanel"></div></div>`;
+ loadAdminStats();adminTab("users");
+}
+async function apiAdmin(url,opts={}){
+ let r=await fetch(url,{...opts,headers:{"Content-Type":"application/json","Authorization":"Bearer "+current,...(opts.headers||{})}});
+ let d=await r.json();if(!r.ok)throw Error(d.error||"خطا");return d;
+}
+async function loadAdminStats(){
+ try{let d=await apiAdmin("/api/admin/stats");$("adminStats").innerHTML=
+ `<div class="adminstat"><span class="muted">کل کاربران</span><b>${d.totalUsers}</b></div>
+ <div class="adminstat"><span class="muted">کاربران فعال</span><b>${d.activeUsers}</b></div>
+ <div class="adminstat"><span class="muted">مسدودشده</span><b>${d.blockedUsers}</b></div>
+ <div class="adminstat"><span class="muted">کل تحلیل‌ها</span><b>${d.totalAnalyses}</b></div>`;
+ }catch(e){msg(e.message)}
+}
+function adminTab(tab){
+ $("atUsers").classList.toggle("active",tab==="users");$("atAnalyses").classList.toggle("active",tab==="analyses");
+ if(tab==="users")loadAdminUsers();else loadAdminAnalyses();
+}
+async function loadAdminUsers(){
+ $("adminPanel").innerHTML=`<div class="adminbar"><input id="adminSearch" placeholder="جست‌وجوی نام یا نام کاربری"><button class="smallbtn" onclick="loadAdminUsers()">🔎 جست‌وجو</button></div><div id="adminList">در حال بارگذاری...</div>`;
+ try{let q=encodeURIComponent($("adminSearch").value||"");let d=await apiAdmin("/api/admin/users?q="+q);
+ $("adminList").innerHTML=d.users.length?d.users.map(u=>`<div class="card" style="margin:10px 0">
+ <b>${esc(u.name)}</b> <span class="muted">@${esc(u.username)}</span>
+ <p class="muted">${esc(u.grade)} ${u.major?"• "+esc(u.major):""} • ${u.historyCount} تحلیل • وضعیت: ${u.status==="blocked"?"مسدود":"فعال"}</p>
+ ${u.id===(users[current]?.id)?"":`<button class="smallbtn ${u.status==="blocked"?"success":"warn"}" onclick="toggleBlock(${u.id},'${u.status}')">${u.status==="blocked"?"فعال‌سازی":"مسدود کردن"}</button>
+ <button class="smallbtn danger" onclick="deleteUser(${u.id})">🗑 حذف</button>`}
+ </div>`).join(""):`<div class="empty">کاربری پیدا نشد.</div>`;
+ }catch(e){$("adminList").innerHTML=`<div class="result">${esc(e.message)}</div>`}
+}
+async function toggleBlock(id,status){
+ try{await apiAdmin("/api/admin/users/"+id+(status==="blocked"?"/unblock":"/block"),{method:"POST"});msg(status==="blocked"?"کاربر فعال شد":"کاربر مسدود شد");loadAdminStats();loadAdminUsers()}catch(e){msg(e.message)}
+}
+async function deleteUser(id){
+ if(!confirm("این کاربر و تمام تحلیل‌هایش حذف شود؟"))return;
+ try{await apiAdmin("/api/admin/users/"+id,{method:"DELETE"});msg("کاربر حذف شد");loadAdminStats();loadAdminUsers()}catch(e){msg(e.message)}
+}
+async function loadAdminAnalyses(){
+ $("adminPanel").innerHTML=`<div id="adminAnalyses">در حال بارگذاری...</div>`;
+ try{let d=await apiAdmin("/api/admin/analyses");
+ $("adminAnalyses").innerHTML=d.analyses.length?d.analyses.map(a=>`<div class="card" style="margin:10px 0">
+ <b>${esc(a.subject)}</b> <span class="muted">• ${esc(a.username)} • ${esc(a.created_at)}</span>
+ <p>${esc(a.question||"سؤال تصویری")}</p>
+ <details><summary>مشاهده پاسخ</summary><div class="result" style="white-space:pre-wrap;margin-top:10px">${esc(a.answer)}</div></details>
+ <button class="smallbtn danger" style="margin-top:10px" onclick="deleteAnalysis(${a.id})">🗑 حذف تحلیل</button>
+ </div>`).join(""):`<div class="empty">تحلیلی وجود ندارد.</div>`;
+ }catch(e){$("adminAnalyses").innerHTML=`<div class="result">${esc(e.message)}</div>`}
+}
+async function deleteAnalysis(id){
+ if(!confirm("این تحلیل حذف شود؟"))return;
+ try{await apiAdmin("/api/admin/analyses/"+id,{method:"DELETE"});msg("تحلیل حذف شد");loadAdminStats();loadAdminAnalyses()}catch(e){msg(e.message)}
+}
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+document.addEventListener("click",e=>{if(!e.target.closest(".menu"))$("drop").classList.add("hidden")});current=localStorage.getItem("student_token")||""; if(current)dashboard();else show("auth");
+</script>
+</body></html>

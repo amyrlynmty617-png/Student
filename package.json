@@ -1,0 +1,8 @@
+{
+ "name":"student-ai-site-v2",
+ "version":"2.0.0",
+ "private":true,
+ "type":"module",
+ "scripts":{"start":"node server.js"},
+ "dependencies":{"better-sqlite3":"latest","dotenv":"latest","express":"latest","openai":"latest"}
+}
