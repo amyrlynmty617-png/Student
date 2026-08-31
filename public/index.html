@@ -1,126 +1,1053 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
 <title>Student AI</title>
 
 <style>
+
+/* =========================
+   پایه
+========================= */
+
+*{
+    box-sizing:border-box;
+}
+
 body{
-font-family:tahoma;
-background:#f1f5f9;
-margin:0;
+    margin:0;
+    font-family:
+        Tahoma,
+        Arial,
+        sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f0fdf4,
+            #eff6ff
+        );
+
+    color:#16302a;
+    min-height:100vh;
 }
 
-.box{
-max-width:420px;
-background:white;
-margin:40px auto;
-padding:25px;
-border-radius:15px;
-box-shadow:0 5px 20px #ccc;
-}
 
-input,button{
-width:100%;
-padding:12px;
-margin:7px 0;
-border-radius:8px;
-border:1px solid #ccc;
-box-sizing:border-box;
-}
+/* =========================
+   صفحات
+========================= */
 
-button{
-background:#2563eb;
-color:white;
-border:0;
-}
-
-h2{
-text-align:center;
+.page{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
 }
 
 .hidden{
-display:none;
+    display:none !important;
 }
 
-.msg{
-margin-top:10px;
-text-align:center;
+
+/* =========================
+   کارت
+========================= */
+
+.card{
+    width:100%;
+    max-width:440px;
+
+    background:#ffffff;
+
+    border-radius:24px;
+
+    padding:28px;
+
+    box-shadow:
+        0 15px 45px
+        rgba(15,118,110,.12);
+
+    border:1px solid #dff5eb;
 }
+
+
+/* =========================
+   لوگو
+========================= */
+
+.logo{
+    width:72px;
+    height:72px;
+
+    margin:0 auto 15px;
+
+    border-radius:22px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:35px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #10b981,
+            #2563eb
+        );
+
+    color:white;
+
+    box-shadow:
+        0 10px 25px
+        rgba(37,99,235,.2);
+}
+
+
+h1{
+    text-align:center;
+    margin:5px 0;
+    color:#123c34;
+}
+
+.subtitle{
+    text-align:center;
+    color:#64748b;
+    font-size:14px;
+    margin-bottom:25px;
+}
+
+
+/* =========================
+   فرم
+========================= */
+
+label{
+    display:block;
+    margin-top:12px;
+    margin-bottom:6px;
+
+    font-size:13px;
+    color:#475569;
+}
+
+input,
+select,
+textarea{
+
+    width:100%;
+
+    padding:13px 14px;
+
+    border-radius:12px;
+
+    border:1px solid #cbd5e1;
+
+    background:#fff;
+
+    font-family:inherit;
+
+    font-size:14px;
+
+    outline:none;
+
+    transition:.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+
+    border-color:#10b981;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(16,185,129,.1);
+}
+
+
+/* =========================
+   دکمه
+========================= */
+
+button{
+
+    width:100%;
+
+    padding:13px;
+
+    border:0;
+
+    border-radius:12px;
+
+    margin-top:12px;
+
+    font-family:inherit;
+
+    font-size:14px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #10b981,
+            #2563eb
+        );
+
+    transition:.2s;
+}
+
+button:hover{
+    transform:translateY(-1px);
+}
+
+button:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+
+/* =========================
+   لینک ثبت نام / ورود
+========================= */
+
+.switch{
+    text-align:center;
+    margin-top:18px;
+
+    color:#64748b;
+
+    font-size:13px;
+}
+
+.switch span{
+
+    color:#2563eb;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+
+/* =========================
+   پیام
+========================= */
+
+.message{
+
+    margin-top:12px;
+
+    text-align:center;
+
+    font-size:13px;
+
+    min-height:20px;
+}
+
+
+/* =========================
+   اپ اصلی
+========================= */
+
+#appPage{
+    display:block;
+    min-height:100vh;
+    padding-bottom:40px;
+}
+
+
+/* =========================
+   هدر
+========================= */
+
+.header{
+
+    height:70px;
+
+    background:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:
+        0 18px;
+
+    border-bottom:
+        1px solid #e2e8f0;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:20;
+}
+
+.header-title{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-weight:bold;
+
+    color:#123c34;
+}
+
+.header-logo{
+
+    width:40px;
+    height:40px;
+
+    border-radius:13px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #10b981,
+            #2563eb
+        );
+}
+
+
+/* =========================
+   سه نقطه
+========================= */
+
+.menu-button{
+
+    width:44px;
+    height:44px;
+
+    margin:0;
+
+    padding:0;
+
+    border-radius:12px;
+
+    background:#f0fdf4;
+
+    color:#0f766e;
+
+    font-size:24px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    box-shadow:none;
+}
+
+.menu-button:hover{
+    background:#dcfce7;
+    transform:none;
+}
+
+
+/* =========================
+   منوی کناری
+========================= */
+
+.side-menu{
+
+    position:fixed;
+
+    top:78px;
+
+    right:12px;
+
+    width:220px;
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:10px;
+
+    box-shadow:
+        0 15px 45px
+        rgba(15,23,42,.18);
+
+    border:
+        1px solid #e2e8f0;
+
+    z-index:50;
+}
+
+.menu-item{
+
+    width:100%;
+
+    padding:13px;
+
+    margin:2px 0;
+
+    background:white;
+
+    color:#334155;
+
+    text-align:right;
+
+    font-weight:normal;
+
+    border-radius:12px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+}
+
+.menu-item:hover{
+
+    background:#f0fdf4;
+
+    color:#047857;
+
+    transform:none;
+}
+
+
+/* =========================
+   محتوای اصلی
+========================= */
+
+.main{
+
+    max-width:800px;
+
+    margin:auto;
+
+    padding:25px 16px;
+}
+
+.welcome{
+
+    background:
+        linear-gradient(
+            135deg,
+            #ecfdf5,
+            #eff6ff
+        );
+
+    border:
+        1px solid #d1fae5;
+
+    border-radius:22px;
+
+    padding:22px;
+
+    margin-bottom:18px;
+}
+
+.welcome h2{
+
+    margin:0 0 8px;
+
+    color:#065f46;
+}
+
+.welcome p{
+
+    margin:0;
+
+    color:#475569;
+
+    font-size:14px;
+}
+
+
+/* =========================
+   پنل
+========================= */
+
+.panel{
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:20px;
+
+    box-shadow:
+        0 8px 30px
+        rgba(15,118,110,.08);
+
+    border:
+        1px solid #e2e8f0;
+
+    margin-bottom:18px;
+}
+
+.panel h3{
+
+    margin-top:0;
+
+    color:#123c34;
+}
+
+
+/* =========================
+   انتخاب نوع سوال
+========================= */
+
+.mode-buttons{
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:10px;
+
+    margin-bottom:15px;
+}
+
+.mode-button{
+
+    margin:0;
+
+    background:#f8fafc;
+
+    color:#334155;
+
+    border:
+        1px solid #cbd5e1;
+}
+
+.mode-button.active{
+
+    color:white;
+
+    border:0;
+
+    background:
+        linear-gradient(
+            135deg,
+            #10b981,
+            #2563eb
+        );
+}
+
+
+/* =========================
+   نتیجه
+========================= */
+
+.answer{
+
+    margin-top:18px;
+
+    padding:18px;
+
+    border-radius:15px;
+
+    background:#f8fafc;
+
+    border-right:
+        4px solid #10b981;
+
+    white-space:pre-wrap;
+
+    line-height:2;
+
+    color:#1e293b;
+
+    min-height:60px;
+}
+
+
+/* =========================
+   تاریخچه
+========================= */
+
+.history-item{
+
+    background:#f8fafc;
+
+    border-radius:15px;
+
+    padding:15px;
+
+    margin-top:10px;
+
+    border-right:
+        3px solid #2563eb;
+}
+
+.history-subject{
+
+    font-weight:bold;
+
+    color:#047857;
+
+    margin-bottom:7px;
+}
+
+.history-question{
+
+    color:#334155;
+
+    font-size:13px;
+
+    line-height:1.9;
+}
+
+.empty{
+
+    text-align:center;
+
+    color:#94a3b8;
+
+    padding:25px;
+}
+
+
+/* =========================
+   موبایل
+========================= */
+
+@media(max-width:500px){
+
+    .card{
+        padding:20px;
+        border-radius:20px;
+    }
+
+    .main{
+        padding:18px 12px;
+    }
+
+    .side-menu{
+        width:200px;
+    }
+}
+
 </style>
 
 </head>
 
+
 <body>
 
 
-<div class="box" id="authBox">
+<!-- =====================================================
+     صفحه ورود
+===================================================== -->
 
-<h2>🎓 Student AI</h2>
+<div id="loginPage" class="page">
+
+<div class="card">
+
+<div class="logo">
+🎓
+</div>
+
+<h1>Student AI</h1>
+
+<div class="subtitle">
+معلم هوشمند مخصوص پایه و رشته شما
+</div>
 
 
-<div id="login">
+<label>
+نام کاربری
+</label>
 
-<h3>ورود</h3>
+<input
+id="loginUsername"
+type="text"
+placeholder="نام کاربری">
 
-<input id="loginUser" placeholder="نام کاربری">
 
-<input id="loginPass" type="password" placeholder="رمز عبور">
+<label>
+رمز عبور
+</label>
+
+<input
+id="loginPassword"
+type="password"
+placeholder="رمز عبور">
+
 
 <button onclick="login()">
 ورود
 </button>
 
+
+<div
+id="loginMessage"
+class="message">
+</div>
+
+
+<div class="switch">
+
+حساب کاربری ندارید؟
+
+<span onclick="showRegister()">
+ثبت‌نام کنید
+</span>
+
+</div>
+
+</div>
+
 </div>
 
 
 
-<hr>
+<!-- =====================================================
+     صفحه ثبت نام
+===================================================== -->
+
+<div id="registerPage" class="page hidden">
+
+<div class="card">
+
+<div class="logo">
+📝
+</div>
+
+<h1>ثبت‌نام</h1>
+
+<div class="subtitle">
+اطلاعات تحصیلی خود را وارد کنید
+</div>
 
 
-<div id="register">
+<label>
+نام و نام خانوادگی
+</label>
 
-<h3>ثبت نام</h3>
+<input
+id="registerName"
+type="text"
+placeholder="مثلاً علی رضایی">
 
 
-<input id="regName" placeholder="نام و نام خانوادگی">
+<label>
+نام کاربری
+</label>
 
-<input id="regUser" placeholder="نام کاربری">
+<input
+id="registerUsername"
+type="text"
+placeholder="نام کاربری">
 
-<input id="regPass" type="password" placeholder="رمز عبور">
 
-<input id="regGrade" placeholder="پایه تحصیلی">
+<label>
+رمز عبور
+</label>
 
-<input id="regMajor" placeholder="رشته">
+<input
+id="registerPassword"
+type="password"
+placeholder="حداقل ۴ کاراکتر">
+
+
+<label>
+پایه تحصیلی
+</label>
+
+<select
+id="registerGrade"
+onchange="updateMajor()">
+
+<option value="">
+انتخاب پایه
+</option>
+
+<option value="7">
+هفتم
+</option>
+
+<option value="8">
+هشتم
+</option>
+
+<option value="9">
+نهم
+</option>
+
+<option value="10">
+دهم
+</option>
+
+<option value="11">
+یازدهم
+</option>
+
+<option value="12">
+دوازدهم
+</option>
+
+</select>
+
+
+<div id="majorBox" class="hidden">
+
+<label>
+رشته تحصیلی
+</label>
+
+<select id="registerMajor">
+
+<option value="">
+انتخاب رشته
+</option>
+
+<option value="تجربی">
+علوم تجربی
+</option>
+
+<option value="ریاضی">
+ریاضی فیزیک
+</option>
+
+<option value="انسانی">
+علوم انسانی
+</option>
+
+</select>
+
+</div>
 
 
 <button onclick="register()">
-ثبت نام
+ایجاد حساب
 </button>
 
 
+<div
+id="registerMessage"
+class="message">
 </div>
 
 
-<div class="msg" id="msg"></div>
+<div class="switch">
+
+قبلاً حساب ساخته‌اید؟
+
+<span onclick="showLogin()">
+ورود
+</span>
+
+</div>
+
+</div>
 
 </div>
 
 
 
-<div class="box hidden" id="panel">
+<!-- =====================================================
+     برنامه اصلی
+===================================================== -->
 
-<h2>ورود موفق</h2>
+<div id="appPage" class="hidden">
 
-<p id="welcome"></p>
 
-<button onclick="logout()">
+<header class="header">
+
+<div class="header-title">
+
+<div class="header-logo">
+🎓
+</div>
+
+<span>
+Student AI
+</span>
+
+</div>
+
+
+<button
+class="menu-button"
+onclick="toggleMenu()">
+
+⋮
+
+</button>
+
+</header>
+
+
+
+<!-- منوی سه نقطه -->
+
+<div
+id="sideMenu"
+class="side-menu hidden">
+
+<button
+class="menu-item"
+onclick="showSolve()">
+
+🤖
+حل سؤال
+
+</button>
+
+
+<button
+class="menu-item"
+onclick="showHistory()">
+
+📚
+تاریخچه
+
+</button>
+
+
+<button
+class="menu-item"
+onclick="logout()">
+
+🚪
 خروج
+
 </button>
+
+</div>
+
+
+
+<main class="main">
+
+
+<!-- خوش آمدگویی -->
+
+<div class="welcome">
+
+<h2 id="welcomeTitle">
+سلام، خوش آمدید 🌱
+</h2>
+
+<p id="welcomeText">
+به Student AI خوش آمدید.
+</p>
+
+</div>
+
+
+
+<!-- =================================================
+     حل سؤال
+================================================= -->
+
+<div
+id="solvePanel"
+class="panel">
+
+<h3>
+🤖 حل سؤال
+</h3>
+
+
+<div class="mode-buttons">
+
+<button
+id="essayButton"
+class="mode-button active"
+onclick="setMode('essay')">
+
+📖 تشریحی
+
+</button>
+
+
+<button
+id="testButton"
+class="mode-button"
+onclick="setMode('test')">
+
+📝 تستی
+
+</button>
+
+</div>
+
+
+<textarea
+id="question"
+rows="7"
+placeholder="سؤال خود را اینجا بنویسید...">
+</textarea>
+
+
+<button
+id="solveButton"
+onclick="solveQuestion()">
+
+حل سؤال با هوش مصنوعی
+
+</button>
+
+
+<div
+id="answer"
+class="answer">
+
+پاسخ اینجا نمایش داده می‌شود.
+
+</div>
+
+</div>
+
+
+
+<!-- =================================================
+     تاریخچه
+================================================= -->
+
+<div
+id="historyPanel"
+class="panel hidden">
+
+<h3>
+📚 تاریخچه سؤال‌ها
+</h3>
+
+<div id="historyList">
+
+<div class="empty">
+در حال دریافت تاریخچه...
+</div>
+
+</div>
+
+</div>
+
+
+</main>
 
 </div>
 
@@ -128,175 +1055,991 @@ text-align:center;
 
 <script>
 
+/* =====================================================
+   متغیرها
+===================================================== */
 
-let token="";
+let token = "";
+
+let currentUser = null;
+
+let mode = "essay";
 
 
+/* =====================================================
+   ابزار پیام
+===================================================== */
+
+function setMessage(element, text){
+
+    element.innerText = text;
+
+}
+
+
+/* =====================================================
+   نمایش ورود
+===================================================== */
+
+function showLogin(){
+
+    document
+        .getElementById("loginPage")
+        .classList.remove("hidden");
+
+    document
+        .getElementById("registerPage")
+        .classList.add("hidden");
+
+}
+
+
+/* =====================================================
+   نمایش ثبت نام
+===================================================== */
+
+function showRegister(){
+
+    document
+        .getElementById("loginPage")
+        .classList.add("hidden");
+
+    document
+        .getElementById("registerPage")
+        .classList.remove("hidden");
+
+}
+
+
+/* =====================================================
+   انتخاب رشته
+===================================================== */
+
+function updateMajor(){
+
+    const grade =
+        document.getElementById(
+            "registerGrade"
+        ).value;
+
+    const majorBox =
+        document.getElementById(
+            "majorBox"
+        );
+
+    const major =
+        document.getElementById(
+            "registerMajor"
+        );
+
+
+    if(
+        grade === "10" ||
+        grade === "11" ||
+        grade === "12"
+    ){
+
+        majorBox.classList.remove(
+            "hidden"
+        );
+
+    }else{
+
+        majorBox.classList.add(
+            "hidden"
+        );
+
+        major.value = "";
+
+    }
+
+}
+
+
+/* =====================================================
+   ثبت نام
+===================================================== */
 
 async function register(){
 
+    const name =
+        document.getElementById(
+            "registerName"
+        ).value.trim();
 
-let res=await fetch("/api/auth/register",{
+    const username =
+        document.getElementById(
+            "registerUsername"
+        ).value.trim();
 
-method:"POST",
+    const password =
+        document.getElementById(
+            "registerPassword"
+        ).value;
 
-headers:{
-"Content-Type":"application/json"
-},
+    const grade =
+        document.getElementById(
+            "registerGrade"
+        ).value;
 
-body:JSON.stringify({
-
-name:regName.value,
-
-username:regUser.value,
-
-password:regPass.value,
-
-grade:regGrade.value,
-
-major:regMajor.value
-
-})
-
-});
-
-
-let data=await res.json();
+    const major =
+        document.getElementById(
+            "registerMajor"
+        ).value;
 
 
-if(data.token){
+    const message =
+        document.getElementById(
+            "registerMessage"
+        );
 
-msg.innerText="ثبت نام موفق شد";
 
-token=data.token;
+    if(
+        !name ||
+        !username ||
+        !password ||
+        !grade
+    ){
 
-localStorage.token=token;
+        setMessage(
+            message,
+            "لطفاً همه اطلاعات ضروری را وارد کنید."
+        );
 
-showPanel();
+        return;
+    }
 
-}else{
 
-msg.innerText=data.error || "خطا";
+    if(password.length < 4){
+
+        setMessage(
+            message,
+            "رمز عبور باید حداقل ۴ کاراکتر باشد."
+        );
+
+        return;
+    }
+
+
+    if(
+        (grade === "10" ||
+         grade === "11" ||
+         grade === "12")
+        &&
+        !major
+    ){
+
+        setMessage(
+            message,
+            "لطفاً رشته تحصیلی را انتخاب کنید."
+        );
+
+        return;
+    }
+
+
+    message.innerText =
+        "در حال ساخت حساب...";
+
+
+    try{
+
+        const response =
+            await fetch(
+                "/api/auth/register",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:JSON.stringify({
+
+                        name:name,
+
+                        username:username,
+
+                        password:password,
+
+                        grade:grade,
+
+                        major:major
+
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(data.token){
+
+            token = data.token;
+
+            localStorage.setItem(
+                "student_ai_token",
+                token
+            );
+
+
+            message.innerText =
+                "ثبت‌نام با موفقیت انجام شد.";
+
+
+            await loadUser();
+
+        }else{
+
+            message.innerText =
+                data.error ||
+                "ثبت‌نام انجام نشد.";
+
+        }
+
+    }catch(error){
+
+        console.error(error);
+
+        message.innerText =
+            "ارتباط با سرور برقرار نشد.";
+
+    }
 
 }
 
 
-}
-
-
-
-
+/* =====================================================
+   ورود
+===================================================== */
 
 async function login(){
 
+    const username =
+        document.getElementById(
+            "loginUsername"
+        ).value.trim();
 
-let res=await fetch("/api/auth/login",{
-
-method:"POST",
-
-headers:{
-"Content-Type":"application/json"
-},
-
-body:JSON.stringify({
-
-username:loginUser.value,
-
-password:loginPass.value
-
-})
-
-});
+    const password =
+        document.getElementById(
+            "loginPassword"
+        ).value;
 
 
-let data=await res.json();
+    const message =
+        document.getElementById(
+            "loginMessage"
+        );
 
 
+    if(!username || !password){
 
-if(data.token){
+        message.innerText =
+            "نام کاربری و رمز عبور را وارد کنید.";
 
-token=data.token;
-
-localStorage.token=token;
-
-msg.innerText="ورود موفق شد";
-
-showPanel();
+        return;
+    }
 
 
-}else{
+    message.innerText =
+        "در حال ورود...";
 
-msg.innerText=data.error || "خطا";
+
+    try{
+
+        const response =
+            await fetch(
+                "/api/auth/login",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:JSON.stringify({
+
+                        username:username,
+
+                        password:password
+
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(data.token){
+
+            token = data.token;
+
+            localStorage.setItem(
+                "student_ai_token",
+                token
+            );
+
+
+            await loadUser();
+
+        }else{
+
+            message.innerText =
+                data.error ||
+                "ورود ناموفق بود.";
+
+        }
+
+    }catch(error){
+
+        console.error(error);
+
+        message.innerText =
+            "ارتباط با سرور برقرار نشد.";
+
+    }
 
 }
 
 
+/* =====================================================
+   دریافت کاربر
+===================================================== */
+
+async function loadUser(){
+
+    try{
+
+        const response =
+            await fetch(
+                "/api/me",
+                {
+                    headers:{
+                        "Authorization":
+                            "Bearer " + token
+                    }
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(
+            !response.ok ||
+            !data.user
+        ){
+
+            localStorage.removeItem(
+                "student_ai_token"
+            );
+
+            token = "";
+
+            showLogin();
+
+            return;
+
+        }
+
+
+        currentUser =
+            data.user;
+
+
+        showApp();
+
+
+        updateUserInfo();
+
+
+        renderHistory(
+            data.user.history || []
+        );
+
+
+    }catch(error){
+
+        console.error(error);
+
+        localStorage.removeItem(
+            "student_ai_token"
+        );
+
+        token = "";
+
+        showLogin();
+
+    }
+
 }
 
 
+/* =====================================================
+   نمایش برنامه
+===================================================== */
 
+function showApp(){
 
-async function showPanel(){
+    document
+        .getElementById("loginPage")
+        .classList.add("hidden");
 
+    document
+        .getElementById("registerPage")
+        .classList.add("hidden");
 
-authBox.classList.add("hidden");
-
-panel.classList.remove("hidden");
-
-
-let res=await fetch("/api/me",{
-
-headers:{
-Authorization:"Bearer "+token
-}
-
-});
-
-
-let data=await res.json();
-
-
-if(data.user){
-
-welcome.innerText=
-"سلام "+data.user.name;
+    document
+        .getElementById("appPage")
+        .classList.remove("hidden");
 
 }
 
 
+/* =====================================================
+   اطلاعات کاربر
+===================================================== */
+
+function updateUserInfo(){
+
+    if(!currentUser){
+        return;
+    }
+
+
+    document.getElementById(
+        "welcomeTitle"
+    ).innerText =
+        "سلام " +
+        currentUser.name +
+        "، خوش آمدید 🌱";
+
+
+    let text =
+        "پایه " +
+        currentUser.grade;
+
+
+    if(currentUser.major){
+
+        text +=
+            " | رشته " +
+            currentUser.major;
+
+    }
+
+
+    text +=
+        " | آماده‌ای سؤال بپرسی؟";
+
+
+    document.getElementById(
+        "welcomeText"
+    ).innerText = text;
+
 }
 
 
+/* =====================================================
+   منوی سه نقطه
+===================================================== */
+
+function toggleMenu(){
+
+    document
+        .getElementById("sideMenu")
+        .classList.toggle("hidden");
+
+}
+
+
+/* =====================================================
+   پنل حل سؤال
+===================================================== */
+
+function showSolve(){
+
+    document
+        .getElementById("sideMenu")
+        .classList.add("hidden");
+
+    document
+        .getElementById("solvePanel")
+        .classList.remove("hidden");
+
+    document
+        .getElementById("historyPanel")
+        .classList.add("hidden");
+
+}
+
+
+/* =====================================================
+   پنل تاریخچه
+===================================================== */
+
+function showHistory(){
+
+    document
+        .getElementById("sideMenu")
+        .classList.add("hidden");
+
+    document
+        .getElementById("solvePanel")
+        .classList.add("hidden");
+
+    document
+        .getElementById("historyPanel")
+        .classList.remove("hidden");
+
+}
+
+
+/* =====================================================
+   انتخاب تشریحی / تستی
+===================================================== */
+
+function setMode(selectedMode){
+
+    mode = selectedMode;
+
+
+    const essayButton =
+        document.getElementById(
+            "essayButton"
+        );
+
+    const testButton =
+        document.getElementById(
+            "testButton"
+        );
+
+
+    if(mode === "essay"){
+
+        essayButton.classList.add(
+            "active"
+        );
+
+        testButton.classList.remove(
+            "active"
+        );
+
+    }else{
+
+        testButton.classList.add(
+            "active"
+        );
+
+        essayButton.classList.remove(
+            "active"
+        );
+
+    }
+
+
+    document.getElementById(
+        "answer"
+    ).innerText =
+        "سؤال خود را وارد کنید.";
+
+}
+
+
+/* =====================================================
+   حل سؤال
+===================================================== */
+
+async function solveQuestion(){
+
+    const question =
+        document.getElementById(
+            "question"
+        ).value.trim();
+
+    const answer =
+        document.getElementById(
+            "answer"
+        );
+
+    const button =
+        document.getElementById(
+            "solveButton"
+        );
+
+
+    if(!question){
+
+        answer.innerText =
+            "لطفاً سؤال را وارد کنید.";
+
+        return;
+
+    }
+
+
+    if(!token){
+
+        answer.innerText =
+            "ابتدا وارد حساب کاربری شوید.";
+
+        return;
+
+    }
+
+
+    button.disabled = true;
+
+    button.innerText =
+        "در حال بررسی سؤال...";
+
+
+    answer.innerText =
+        "هوش مصنوعی در حال بررسی سؤال بر اساس پایه و رشته شماست...";
+
+
+    let instructions = "";
+
+
+    if(mode === "test"){
+
+        instructions = `
+
+این سؤال از نوع تستی است.
+
+پاسخ را کوتاه، دقیق و قطعی بده.
+
+ابتدا مشخص کن:
+پاسخ: درست
+یا
+پاسخ: غلط
+
+سپس در صورت نیاز در یک یا چند جمله توضیح بده.
+
+اگر سؤال یک عبارت علمی درست یا غلط است،
+درستی آن را با دانش کتاب درسی همان پایه و رشته بررسی کن.
+
+اگر سؤال مربوط به زیست، شیمی، فیزیک،
+ریاضی، ادبیات، دینی یا هر درس دیگری است،
+پاسخ را متناسب با کتاب درسی دانش‌آموز بده.
+
+اگر بین اطلاعات عمومی و کتاب درسی تفاوت وجود دارد،
+برای سؤال مدرسه‌ای، محتوای کتاب درسی همان پایه
+اولویت دارد.
+
+`;
+
+    }else{
+
+        instructions = `
+
+این سؤال تشریحی است.
+
+پاسخ را کامل، آموزشی و مرحله‌به‌مرحله بده.
+
+پاسخ باید متناسب با پایه و رشته دانش‌آموز باشد.
+
+مفاهیم را مطابق سطح کتاب درسی همان پایه توضیح بده.
+
+اگر سؤال علمی است،
+از مطالب آموزشی کتاب درسی همان پایه و رشته استفاده کن.
+
+از توضیحات خارج از سطح دانش‌آموز و مطالب دانشگاهی
+تا حد امکان خودداری کن.
+
+در صورت نیاز:
+1. پاسخ اصلی
+2. توضیح
+3. مراحل حل یا دلیل
+را جدا کن.
+
+`;
+
+    }
+
+
+    try{
+
+        const response =
+            await fetch(
+                "/api/solve",
+                {
+                    method:"POST",
+
+                    headers:{
+
+                        "Content-Type":
+                            "application/json",
+
+                        "Authorization":
+                            "Bearer " + token
+
+                    },
+
+                    body:JSON.stringify({
+
+                        question:question,
+
+                        subject:"مطابق پایه و رشته دانش‌آموز",
+
+                        level:
+                            mode === "test"
+                            ? "تستی - " +
+                              instructions
+                            : "تشریحی - " +
+                              instructions
+
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(
+            response.status === 401
+        ){
+
+            logout();
+
+            return;
+
+        }
+
+
+        answer.innerText =
+            data.answer ||
+            data.error ||
+            "پاسخی دریافت نشد.";
+
+
+        if(data.answer){
+
+            await refreshHistory();
+
+        }
+
+
+    }catch(error){
+
+        console.error(error);
+
+        answer.innerText =
+            "خطا در ارتباط با سرور.";
+
+    }
+
+
+    button.disabled = false;
+
+    button.innerText =
+        "حل سؤال با هوش مصنوعی";
+
+}
+
+
+/* =====================================================
+   دریافت دوباره تاریخچه
+===================================================== */
+
+async function refreshHistory(){
+
+    try{
+
+        const response =
+            await fetch(
+                "/api/me",
+                {
+                    headers:{
+                        "Authorization":
+                            "Bearer " + token
+                    }
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(data.user){
+
+            currentUser =
+                data.user;
+
+            renderHistory(
+                data.user.history || []
+            );
+
+        }
+
+    }catch(error){
+
+        console.error(error);
+
+    }
+
+}
+
+
+/* =====================================================
+   نمایش تاریخچه
+===================================================== */
+
+function renderHistory(history){
+
+    const list =
+        document.getElementById(
+            "historyList"
+        );
+
+
+    if(
+        !history ||
+        history.length === 0
+    ){
+
+        list.innerHTML = `
+            <div class="empty">
+                هنوز سؤالی ثبت نشده است.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    list.innerHTML = "";
+
+
+    history.forEach(item => {
+
+        const div =
+            document.createElement(
+                "div"
+            );
+
+
+        div.className =
+            "history-item";
+
+
+        div.innerHTML = `
+
+            <div class="history-subject">
+                ${escapeHTML(
+                    item.subject || "عمومی"
+                )}
+            </div>
+
+            <div class="history-question">
+                ${escapeHTML(
+                    item.question || ""
+                )}
+            </div>
+
+        `;
+
+
+        list.appendChild(div);
+
+    });
+
+}
+
+
+/* =====================================================
+   جلوگیری از HTML ناخواسته
+===================================================== */
+
+function escapeHTML(value){
+
+    return String(value)
+
+        .replaceAll("&","&amp;")
+
+        .replaceAll("<","&lt;")
+
+        .replaceAll(">","&gt;")
+
+        .replaceAll('"',"&quot;")
+
+        .replaceAll("'","&#039;");
+
+}
+
+
+/* =====================================================
+   خروج
+===================================================== */
 
 function logout(){
 
-localStorage.removeItem("token");
+    token = "";
 
-location.reload();
+    currentUser = null;
+
+    localStorage.removeItem(
+        "student_ai_token"
+    );
+
+
+    document
+        .getElementById("appPage")
+        .classList.add("hidden");
+
+
+    document
+        .getElementById("sideMenu")
+        .classList.add("hidden");
+
+
+    showLogin();
 
 }
 
 
+/* =====================================================
+   شروع برنامه
+===================================================== */
+
+window.addEventListener(
+    "load",
+    () => {
+
+        const savedToken =
+            localStorage.getItem(
+                "student_ai_token"
+            );
 
 
-window.onload=()=>{
+        if(savedToken){
 
-let t=localStorage.token;
+            token = savedToken;
 
-if(t){
+            loadUser();
 
-token=t;
+        }else{
 
-showPanel();
+            showLogin();
 
-}
+        }
 
-}
-
-
+    }
+);
 
 </script>
 
-
 </body>
-</html>
+
+  </html>
